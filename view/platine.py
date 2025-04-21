@@ -17,7 +17,7 @@ class Platine:
 
     def mesurer_distance(self):
         self.capteur = DistanceSensor(echo = 12, trigger = 17, max_distance = 3)
-        while True:
+        while self.ouvert:
             cm = self.capteur.distance * 100
             # print(f"Distance : {str(cm)} cm")
             self.afficher.afficher_lcd(cm)
@@ -44,6 +44,5 @@ class Platine:
         self.ouvert = True
     
     def demarrer(self):
-        self.bouton_demarrer.wait_for_press()
         self.ouvrir_programme()
         self.mesurer_distance()
