@@ -2,8 +2,7 @@ from gpiozero import DistanceSensor, Button
 from time import sleep
 from view.ADCDevice import *
 from view.LCD1602 import CharLCD1602
-from signal import pause
-import sys
+from view.view import View
 
 class Platine:
     
@@ -12,21 +11,16 @@ class Platine:
         self.bouton_fermer = Button(6, bounce_time=0.1)
         self.ouvert = False
         
-        self.ecran_lcd = CharLCD1602()
-        self.ecran_lcd.init_lcd(0x27, 1)
-        
         self.bouton_fermer.when_pressed = self.fermer_programme
         
-        
-    
-
-       
+        self.afficher = View()
 
     def mesurer_distance(self):
         self.capteur = DistanceSensor(echo = 12, trigger = 17, max_distance = 3)
         while True:
             cm = self.capteur.distance * 100
-            print(f"Distance : {str(cm)} cm")
+            # print(f"Distance : {str(cm)} cm")
+            self.afficher.afficher_lcd(cm)
             sleep(1)
         
         
@@ -39,11 +33,9 @@ class Platine:
         while self.ouvert:
             self.valeurADC = self.adc.analogRead(0)
             self.voltage = self.valeurADC / 255.0 * 3.3
-            print(f"Valeur ADC : {self.valeurADC}, Voltage :{self.voltage:.2}")
+            # print(f"Valeur ADC : {self.valeurADC}, Voltage :{self.voltage:.2}")
+            self.afficher.afficher_console(self.valeurADC, self.voltage)
             sleep(0.03)
-            
-    def lcd(self, valeur):
-        self.ecran_lcd.write(0, 0, valeur)
         
     def fermer_programme(self):
         self.ouvert = False
