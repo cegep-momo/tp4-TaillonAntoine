@@ -3,6 +3,7 @@ from time import sleep
 from view.ADCDevice import *
 from view.LCD1602 import CharLCD1602
 from view.view import View
+import threading
 
 class Platine:
     
@@ -45,4 +46,6 @@ class Platine:
     
     def demarrer(self):
         self.ouvrir_programme()
+        self.un_thread = threading.Thread(target = self.potentionmetre)
+        self.un_thread.start()
         self.mesurer_distance()
