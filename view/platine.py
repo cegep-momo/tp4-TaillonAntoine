@@ -46,4 +46,4 @@ class Platine:
     def demarrer(self):
         self.bouton_demarrer.wait_for_press()
         self.ouvrir_programme()
-        self.potentionmetre()
+        self.mesurer_distance()
