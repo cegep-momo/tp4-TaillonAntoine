@@ -4,6 +4,9 @@ from view.ADCDevice import *
 from view.LCD1602 import CharLCD1602
 from view.view import View
 import threading
+from model.mesure import Mesure
+from datetime import datetime
+from model.model import Modele
 
 class Platine:
     
@@ -15,13 +18,15 @@ class Platine:
         self.bouton_fermer.when_pressed = self.fermer_programme
         
         self.afficher = View()
+        
+        self.modele = Modele()
 
     def mesurer_distance(self):
         self.capteur = DistanceSensor(echo = 12, trigger = 17, max_distance = 3)
         while self.ouvert:
-            cm = self.capteur.distance * 100
-            # print(f"Distance : {str(cm)} cm")
-            self.afficher.afficher_lcd(cm)
+            self.cm = self.capteur.distance * 100
+            self.cm = round(self.cm, 2)
+            self.afficher.afficher_lcd(self.cm)
             sleep(1)
         
         
@@ -34,12 +39,14 @@ class Platine:
         while self.ouvert:
             self.valeurADC = self.adc.analogRead(0)
             self.voltage = self.valeurADC / 255.0 * 3.3
-            # print(f"Valeur ADC : {self.valeurADC}, Voltage :{self.voltage:.2}")
+            self.voltage = round(self.voltage, 2)
             self.afficher.afficher_console(self.valeurADC, self.voltage)
             sleep(0.03)
         
     def fermer_programme(self):
         self.ouvert = False
+        self.mesure = Mesure(str(datetime.now()), self.valeurADC, self.voltage, self.cm)
+        self.modele.enregistremant(self.mesure)
     
     def ouvrir_programme(self):
         self.ouvert = True
