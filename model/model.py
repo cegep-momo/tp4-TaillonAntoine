@@ -16,11 +16,6 @@ class Modele():
             json.dump(self.donnes_existant, json_fichier, ensure_ascii=False, indent=4, sort_keys=False)
             
     def convertir_json(self, donner):
-        # resultat = {"date": donner.date,
-        #             "adc": donner.adc,
-        #             "voltage": donner.voltage,
-        #             "cm": donner.cm}
-        
         resultat = {"date": donner.date,
                     "adc": donner.adc,
                     "voltage": donner.voltage,

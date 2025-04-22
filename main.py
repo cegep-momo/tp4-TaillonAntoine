@@ -1,4 +1,3 @@
-from view.platine import Platine
 from controler.controler import Controleur
 
 if __name__ == "__main__":
