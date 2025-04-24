@@ -1,6 +1,5 @@
 from view.platine import Platine
 from model.model import Modele
-import threading
 from model.mesure import Mesure
 from datetime import datetime
 from time import sleep
@@ -28,7 +27,6 @@ class Controleur():
 
     def fermer_programme(self):
         self.ouvert = False
-        # self.mesure = Mesure(str(datetime.now()), self.valeurADC, self.voltage, self.cm)
     
     def ouvrir_programme(self):
         self.ouvert = True

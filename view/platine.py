@@ -1,6 +1,5 @@
 from gpiozero import DistanceSensor, Button
 from view.ADCDevice import *
-from view.LCD1602 import CharLCD1602
 from view.view import View
 from model.model import Modele
 
